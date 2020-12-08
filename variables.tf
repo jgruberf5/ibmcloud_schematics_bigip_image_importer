@@ -1,10 +1,10 @@
 ##################################################################################
-# region - The VPC region to Import the TMOS Image
+# region - The VPC region to create the TMOS VPC Custom Image
 ##################################################################################
 variable "region" {
-  type = string
-  default = "us-south"
-  description = "The VPC region to import the TMOS Image"
+  type        = string
+  default     = "us-south"
+  description = "The VPC region to create the TMOS VPC Custom Image"
 }
 
 # Present for CLI testng
