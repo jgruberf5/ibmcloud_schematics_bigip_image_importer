@@ -16,5 +16,5 @@ provider "ibm" {
 # Read/validate Region
 ##############################################################################
 data "ibm_is_region" "region" {
-  name = "${var.region}"
+  name = var.region
 }
