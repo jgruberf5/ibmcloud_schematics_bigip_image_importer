@@ -19,17 +19,17 @@ resource "ibm_is_image" "vpc_custom_image" {
 }
 
 output "vpc_image_name" {
-  value = vpc_custom_image.name
+  value = ibm_is_image.vpc_custom_image.name
 }
 
 output "vpc_image_id" {
-  value = vpc_custom_image.id
+  value = ibm_is_image.vpc_custom_image.id
 }
 
 output "vpc_image_crn" {
-  value = vpc_custom_image.crn
+  value = ibm_is_image.vpc_custom_image.crn
 }
 
 output "vpc_image_status" {
-  value = vpc_custom_image.status
+  value = ibm_is_image.vpc_custom_image.status
 }
