@@ -2,9 +2,9 @@
 data "external" "f5_public_image" {
   program = ["python", "${path.module}/image_selector.py"]
   query = {
-      download_region = "${var.download_region}"
-      version_prefix = "${var.tmos_version}"
-      type = "${var.tmos_image_type}"
+      download_region = var.download_region
+      version_prefix = var.tmos_version
+      type = var.tmos_image_type
   }
 }
 
