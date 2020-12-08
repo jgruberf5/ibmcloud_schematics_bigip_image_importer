@@ -9,12 +9,12 @@ data "external" "f5_public_image" {
 }
 
 locals {
-  vpc_image_name = var.vpc_image_name == "" ? f5_public_image.result.image_name : var.vpc_image_name
+  vpc_image_name = var.vpc_image_name == "" ? external.f5_public_image.result.image_name : var.vpc_image_name
 }
 
 resource "ibm_is_image" "vpc_custom_image" {
   name = local.vpc_image_name
-  href = f5_public_image.result.image_sql_url
+  href = external.f5_public_image.result.image_sql_url
   operating_system = "centos-7-amd64"
 }
 
