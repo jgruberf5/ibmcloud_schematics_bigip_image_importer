@@ -35,38 +35,45 @@ def longest_substr(type, catalog_image_name, version_prefix):
 
 
 def main():
-    for line in {x.strip() for x in sys.stdin}:
-        if line:
-            jsondata = json.loads(line)
-            tmos_type = jsondata['type'].lower()
-            if tmos_type not in ALLOWED_TMOS_TYPES:
-                sys.stderr.write('TMOS type must be in: %s' %
-                                 ALLOWED_TMOS_TYPES)
-                sys.exit(1)
-            tmos_version_match = jsondata['version_prefix'].lower().replace('.','-')
-            region = jsondata['download_region'].lower()
-            if region not in PUBLIC_REGIONS:
-                region = 'us-south'
-            image_catalog = get_public_images(region)
-            max_match = 0
-            image_url = None
-            image_name = None
-            for image in image_catalog[region]:
-                match_length = longest_substr(tmos_type, image['image_name'], tmos_version_match)
-                if match_length >= max_match:
-                    max_match = match_length
-                    image_url = image['image_sql_url']
-                    image_name = image['image_name']
-            if not image_url:
-                sys.stderr.write(
-                    'No image in the public image catalog matched version %s' % tmos_version_match)
-                sys.exit(1)
-            jsondata['image_sql_url'] = image_url
-            jsondata['image_name'] = image_name
-            sys.stdout.write(json.dumps(jsondata))
-    sys.stderr.write(
-        'type, download_region, verion_prefix inputs require to query public f5 images')
-    sys.exit(1)
+    jsondata = json.loads(sys.stdin.read())
+    if 'type' not in jsondata:
+        sys.stderr.write(
+            'type, download_region, verion_prefix inputs require to query public f5 images')
+        sys.exit(1)
+    if 'download_region' not in jsondata:
+        sys.stderr.write(
+            'type, download_region, verion_prefix inputs require to query public f5 images')
+        sys.exit(1)
+    if 'version_prefix' not in jsondata:
+        sys.stderr.write(
+            'type, download_region, verion_prefix inputs require to query public f5 images')
+        sys.exit(1)
+    tmos_type = jsondata['type'].lower()
+    if tmos_type not in ALLOWED_TMOS_TYPES:
+        sys.stderr.write('TMOS type must be in: %s' %
+                         ALLOWED_TMOS_TYPES)
+        sys.exit(1)
+    tmos_version_match = jsondata['version_prefix'].lower().replace('.','-')
+    region = jsondata['download_region'].lower()
+    if region not in PUBLIC_REGIONS:
+        region = 'us-south'
+    image_catalog = get_public_images(region)
+    max_match = 0
+    image_url = None
+    image_name = None
+    for image in image_catalog[region]:
+        match_length = longest_substr(tmos_type, image['image_name'], tmos_version_match)
+        if match_length >= max_match:
+            max_match = match_length
+            image_url = image['image_sql_url']
+            image_name = image['image_name']
+    if not image_url:
+        sys.stderr.write(
+            'No image in the public image catalog matched version %s' % tmos_version_match)
+        sys.exit(1)
+    jsondata['image_sql_url'] = image_url
+    jsondata['image_name'] = image_name
+    sys.stdout.write(json.dumps(jsondata))
 
 
 if __name__ == '__main__':
