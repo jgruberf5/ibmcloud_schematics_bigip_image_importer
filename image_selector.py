@@ -2,7 +2,7 @@
 
 import sys
 import json
-import requests
+import urllib3
 import difflib
 
 ALLOWED_TMOS_TYPES = ['all', 'ltm']
@@ -15,9 +15,9 @@ def get_public_images(region):
     catalog_url = "https://f5-adc-%s.s3.%s.cloud-object-storage.appdomain.cloud/f5-image-catalog.json" % (
         region, region)
     try:
-        response = requests.get(catalog_url)
-        response.raise_for_status()
-        return response.json()
+        http = urllib3.PoolManager()
+        response = http.request('GET', catalog_url)
+        return json.loads(response.data)
     except Exception as ex:
         sys.stderr.write(
             'Can not fetch F5 image catalog at %s: %s' % (catalog_url, ex))
