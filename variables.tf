@@ -3,7 +3,7 @@
 ##################################################################################
 variable "region" {
   type = string
-  default = 'us-south'
+  default = "us-south"
   description = "The VPC region to import the TMOS Image"
 }
 
