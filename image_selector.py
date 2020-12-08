@@ -1,8 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys
 import json
-import urllib2
+import urllib.request
 import difflib
 
 ALLOWED_TMOS_TYPES = ['all', 'ltm']
@@ -15,7 +15,7 @@ def get_public_images(region):
     catalog_url = "https://f5-adc-%s.s3.%s.cloud-object-storage.appdomain.cloud/f5-image-catalog.json" % (
         region, region)
     try:
-        response = urllib2.urlopen(catalog_url)
+        response = urllib.request.urlopen(catalog_url)
         return json.load(response)
     except Exception as ex:
         sys.stderr.write(
