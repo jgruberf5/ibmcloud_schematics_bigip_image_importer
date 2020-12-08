@@ -1,17 +1,28 @@
 ##################################################################################
 # region - The VPC region to Import the TMOS Image
 ##################################################################################
-variable "download_region" {
-  type        = string
-  default     = "us-south"
-  description = "The VPC region to Import the TMOS Image"
+variable "region" {
+  type = string
+  default = 'us-south'
+  description = "The VPC region to import the TMOS Image"
 }
+
 # Present for CLI testng
 #variable "api_key" {
 #  type        = string
 #  default     = ""
 #  description = "IBM Public Cloud API KEY"
 #}
+
+
+##################################################################################
+# download_region - The VPC region to Download the Public TMOS COS Image
+##################################################################################
+variable "download_region" {
+  type        = string
+  default     = "us-south"
+  description = "The VPC region to Download the Public TMOS COS Image"
+}
 
 ##################################################################################
 # vpc_image_name - The VPC Custom Image Name
