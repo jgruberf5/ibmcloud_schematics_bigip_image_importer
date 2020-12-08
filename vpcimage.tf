@@ -26,10 +26,6 @@ output "vpc_image_id" {
   value = ibm_is_image.vpc_custom_image.id
 }
 
-output "vpc_image_crn" {
-  value = ibm_is_image.vpc_custom_image.crn
-}
-
 output "vpc_image_status" {
   value = ibm_is_image.vpc_custom_image.status
 }
